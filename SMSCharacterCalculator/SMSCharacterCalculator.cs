@@ -68,11 +68,11 @@ namespace SMSCharacterCalculator
             {
                 if (CharactersWithTwoLength.Contains(c))
                 {
-                    length = length + 2;
+                    length += 2;
                 }
                 else
                 {
-                    length = length + 1;
+                    length++;
                 }
             }
 

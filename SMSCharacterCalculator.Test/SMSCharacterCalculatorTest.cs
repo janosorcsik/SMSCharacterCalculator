@@ -59,7 +59,6 @@ namespace SMSCharacterCalculator.Test
             string actual = SMSCharacterCalculator.OptimizeText(text);
 
             Assert.IsTrue(text == actual);
-
         }
 
         [TestMethod]
@@ -182,4 +181,3 @@ namespace SMSCharacterCalculator.Test
         }
     }
 }
-    
