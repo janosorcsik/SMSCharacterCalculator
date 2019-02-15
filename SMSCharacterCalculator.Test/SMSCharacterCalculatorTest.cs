@@ -130,7 +130,7 @@ namespace SMSCharacterCalculator.Test
             string text = "{Í}";
             string expected = "{I}";
 
-            SMSCharacterCalculator.SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
+            SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
 
             Assert.IsFalse(actual.IsLonger);
             Assert.IsTrue(actual.TextLength == 5);
@@ -144,7 +144,7 @@ namespace SMSCharacterCalculator.Test
             string text =
                 "{abvgfhtrururufhdfjhdjfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}";
 
-            SMSCharacterCalculator.SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
+            SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
 
             Assert.IsFalse(actual.IsLonger);
             Assert.IsTrue(actual.TextLength == 164);
@@ -158,7 +158,7 @@ namespace SMSCharacterCalculator.Test
             string text =
                 "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}";
 
-            SMSCharacterCalculator.SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
+            SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
 
             Assert.IsFalse(actual.IsLonger);
             Assert.IsTrue(actual.TextLength == 308);
@@ -172,7 +172,7 @@ namespace SMSCharacterCalculator.Test
             string text =
                 "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhhjhjjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhhjhjjhjjjjhjhjhjhhjhhhhuuuuuuuuuuuuuuuuuuuujdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}";
 
-            SMSCharacterCalculator.SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
+            SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
 
             Assert.IsTrue(actual.IsLonger);
             Assert.IsTrue(actual.TextLength == 461);
