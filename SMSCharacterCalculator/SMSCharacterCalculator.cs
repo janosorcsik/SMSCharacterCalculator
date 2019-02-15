@@ -6,17 +6,6 @@ namespace SMSCharacterCalculator
 {
     public static class SMSCharacterCalculator
     {
-        public class SMSValidation
-        {
-            public bool IsLonger { get; set; }
-
-            public int TextLength { get; set; }
-
-            public int SMSCount { get; set; }
-
-            public string OptimizedText { get; set; }
-        }
-
         public static SMSValidation GetSMSValidation(string text, bool optimize = true)
         {
             SMSValidation smsValidation = new SMSValidation();
