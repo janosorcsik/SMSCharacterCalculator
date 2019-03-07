@@ -53,9 +53,9 @@ namespace SMSCharacterCalculator
                 return length;
             }
 
-            foreach (char c in text)
+            for (int i = 0; i < text.Length; i++)
             {
-                if (CharactersWithTwoLength.Contains(c))
+                if (CharactersWithTwoLength.Contains(text[i]))
                 {
                     length += 2;
                 }
@@ -75,11 +75,11 @@ namespace SMSCharacterCalculator
                 return text;
             }
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder(text.Length);
 
-            foreach (char c in text)
+            for (int i = 0; i < text.Length; i++)
             {
-                sb.Append(OptimizeCharacter(c));
+                sb.Append(OptimizeCharacter(text[i]));
             }
 
             return sb.ToString();
@@ -87,9 +87,7 @@ namespace SMSCharacterCalculator
 
         private static char OptimizeCharacter(char character)
         {
-            char temp;
-
-            if (!UnicodeToGSM.TryGetValue(character, out temp))
+            if (!UnicodeToGSM.TryGetValue(character, out char temp))
             {
                 temp = character;
             }

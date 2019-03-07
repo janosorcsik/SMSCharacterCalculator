@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace SMSCharacterCalculator.Test
 {
@@ -116,12 +117,24 @@ namespace SMSCharacterCalculator.Test
                 "Ü"
             };
 
+            var s1 = Stopwatch.StartNew();
             for (int i = 0; i < unicodeCharacters.Length; i++)
             {
                 string actual = SMSCharacterCalculator.OptimizeText(unicodeCharacters[i]);
 
                 Assert.IsTrue(actual == gsmCharacters[i]);
             }
+            s1.Stop();
+            var s2 = Stopwatch.StartNew();
+            for (int i = 0; i < unicodeCharacters.Length; i++)
+            {
+                string actual = SMSCharacterCalculator.OptimizeText2(unicodeCharacters[i]);
+
+                Assert.IsTrue(actual == gsmCharacters[i]);
+            }
+            s2.Stop();
+            Trace.WriteLine((s1.Elapsed.TotalMilliseconds).ToString("0.00 ns"));
+            Trace.WriteLine((s2.Elapsed.TotalMilliseconds).ToString("0.00 ns"));
         }
 
         [TestMethod]
