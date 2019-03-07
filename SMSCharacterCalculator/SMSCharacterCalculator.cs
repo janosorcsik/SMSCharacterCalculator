@@ -1,49 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 
-[assembly: InternalsVisibleTo("SMSCharacterCalculator.Test")]
-namespace SMSCharacterCalculator
+[assembly: InternalsVisibleTo("SmsCharacterCalculator.Test")]
+
+namespace SmsCharacterCalculator
 {
-    public static class SMSCharacterCalculator
+    public static class SmsCharacterCalculator
     {
-        public static SMSValidation GetSMSValidation(string text, bool optimize = true)
+        public static SmsValidation GetSmsValidation(string text, bool optimize = true)
         {
-            SMSValidation smsValidation = new SMSValidation();
-
             if (optimize)
             {
                 text = OptimizeText(text);
             }
 
-            smsValidation.OptimizedText = text;
-
-            smsValidation.TextLength = CalculateLength(text);
-
-            const int firstSMSLengthMax = 160;
-            const int secondSMSLengthMax = 306;
-            const int thirdSMSLengthMax = 459;
-
-            smsValidation.IsLonger = smsValidation.TextLength > thirdSMSLengthMax;
-
-            if (smsValidation.TextLength <= firstSMSLengthMax)
+            return new SmsValidation
             {
-                smsValidation.SMSCount = 1;
-            }
-            else
-            {
-                if (smsValidation.TextLength <= secondSMSLengthMax)
-                {
-                    smsValidation.SMSCount = 2;
-                }
-                else
-                {
-                    smsValidation.SMSCount = 3;
-                }
-            }
-
-            return smsValidation;
+                OptimizedText = text,
+                TextLength = CalculateLength(text)
+            };
         }
 
         internal static int CalculateLength(string text)
@@ -57,14 +34,7 @@ namespace SMSCharacterCalculator
 
             for (int i = 0; i < text.Length; i++)
             {
-                if (CharactersWithTwoLength.Contains(text[i]))
-                {
-                    length += 2;
-                }
-                else
-                {
-                    length++;
-                }
+                length += CharactersWithTwoLength.Contains(text[i]) ? 2 : 1;
             }
 
             return length;
@@ -77,27 +47,23 @@ namespace SMSCharacterCalculator
                 return text;
             }
 
-            StringBuilder sb = new StringBuilder(text.Length);
+            var length = text.Length - 1;
 
-            for (int i = 0; i < text.Length; i++)
+            return string.Create(text.Length, 0, (buffer, _) =>
             {
-                sb.Append(OptimizeCharacter(text[i]));
-            }
-
-            return sb.ToString();
+                for (int i = length; i >= 0; i--)
+                {
+                    buffer[i] = OptimizeCharacter(text[i]);
+                }
+            });
         }
 
         private static char OptimizeCharacter(char character)
         {
-            if (!UnicodeToGSM.TryGetValue(character, out char temp))
-            {
-                temp = character;
-            }
-
-            return temp;
+            return UnicodeToGsm.TryGetValue(character, out char temp) ? temp : character;
         }
 
-        private static readonly Dictionary<char, char> UnicodeToGSM = new Dictionary<char, char>
+        private static readonly IReadOnlyDictionary<char, char> UnicodeToGsm = new Dictionary<char, char>
         {
             {'á', 'à'},
             {'í', 'ì'},
@@ -113,6 +79,7 @@ namespace SMSCharacterCalculator
             {'Ű', 'Ü'}
         };
 
-        private static readonly char[] CharactersWithTwoLength = {'|', '^', '€', '{', '}', '[', '~', ']', '\\'};
+        private static readonly IReadOnlyCollection<char> CharactersWithTwoLength =
+            Array.AsReadOnly(new[] {'|', '^', '€', '{', '}', '[', '~', ']', '\\'});
     }
 }

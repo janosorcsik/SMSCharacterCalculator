@@ -1,6 +1,6 @@
 language: csharp
 dist: trusty
-solution: SMSCharacterCalculator.sln
+solution: SmsCharacterCalculator.sln
 mono: none
 dotnet: 2.1.502
 
@@ -9,4 +9,4 @@ install:
 
 script:
 - dotnet build
-- dotnet test SMSCharacterCalculator.Test/SMSCharacterCalculator.Test.csproj
+- dotnet test SmsCharacterCalculator.Test/SmsCharacterCalculator.Test.csproj

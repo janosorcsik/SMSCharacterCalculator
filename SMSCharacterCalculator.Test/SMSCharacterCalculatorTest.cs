@@ -1,16 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SMSCharacterCalculator.Test
+namespace SmsCharacterCalculator.Test
 {
     [TestClass]
-    public class SMSCharacterCalculatorTest
+    public class SmsCharacterCalculatorTest
     {
         [TestMethod]
         public void CalculateLength_With_Null()
         {
-            string text = null;
-
-            int length = SMSCharacterCalculator.CalculateLength(text);
+            int length = SmsCharacterCalculator.CalculateLength(null);
 
             Assert.IsTrue(length == 0);
         }
@@ -20,7 +18,7 @@ namespace SMSCharacterCalculator.Test
         {
             string text = string.Empty;
 
-            int length = SMSCharacterCalculator.CalculateLength(text);
+            int length = SmsCharacterCalculator.CalculateLength(text);
 
             Assert.IsTrue(length == 0);
         }
@@ -28,9 +26,9 @@ namespace SMSCharacterCalculator.Test
         [TestMethod]
         public void CalculateLength_With_One_Character()
         {
-            string text = "a";
+            const string text = "a";
 
-            int length = SMSCharacterCalculator.CalculateLength(text);
+            int length = SmsCharacterCalculator.CalculateLength(text);
 
             Assert.IsTrue(length == 1);
         }
@@ -45,7 +43,7 @@ namespace SMSCharacterCalculator.Test
 
             foreach (string s in specialCharacters)
             {
-                int length = SMSCharacterCalculator.CalculateLength(s);
+                int length = SmsCharacterCalculator.CalculateLength(s);
 
                 Assert.IsTrue(length == 2);
             }
@@ -54,11 +52,9 @@ namespace SMSCharacterCalculator.Test
         [TestMethod]
         public void OptimizeText_With_Null()
         {
-            string text = null;
+            string actual = SmsCharacterCalculator.OptimizeText(null);
 
-            string actual = SMSCharacterCalculator.OptimizeText(text);
-
-            Assert.IsTrue(text == actual);
+            Assert.IsNull(actual);
         }
 
         [TestMethod]
@@ -66,7 +62,7 @@ namespace SMSCharacterCalculator.Test
         {
             string text = string.Empty;
 
-            string actual = SMSCharacterCalculator.OptimizeText(text);
+            string actual = SmsCharacterCalculator.OptimizeText(text);
 
             Assert.IsTrue(text == actual);
         }
@@ -74,9 +70,9 @@ namespace SMSCharacterCalculator.Test
         [TestMethod]
         public void OptimizeText_With_One_Character()
         {
-            string text = "a";
+            const string text = "a";
 
-            string actual = SMSCharacterCalculator.OptimizeText(text);
+            string actual = SmsCharacterCalculator.OptimizeText(text);
 
             Assert.IsTrue(text == actual);
         }
@@ -118,7 +114,7 @@ namespace SMSCharacterCalculator.Test
 
             for (int i = 0; i < unicodeCharacters.Length; i++)
             {
-                string actual = SMSCharacterCalculator.OptimizeText(unicodeCharacters[i]);
+                string actual = SmsCharacterCalculator.OptimizeText(unicodeCharacters[i]);
 
                 Assert.IsTrue(actual == gsmCharacters[i]);
             }
@@ -127,56 +123,56 @@ namespace SMSCharacterCalculator.Test
         [TestMethod]
         public void GetSMSValidation_With_One_SMS_With_Unicode_AND_Special_Character()
         {
-            string text = "{Í}";
-            string expected = "{I}";
+            const string text = "{Í}";
+            const string expected = "{I}";
 
-            SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
+            SmsValidation actual = SmsCharacterCalculator.GetSmsValidation(text);
 
             Assert.IsFalse(actual.IsLonger);
             Assert.IsTrue(actual.TextLength == 5);
-            Assert.IsTrue(actual.SMSCount == 1);
+            Assert.IsTrue(actual.SmsCount == 1);
             Assert.IsTrue(actual.OptimizedText == expected);
         }
 
         [TestMethod]
         public void GetSMSValidation_With_Two_SMS()
         {
-            string text =
+            const string text =
                 "{abvgfhtrururufhdfjhdjfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}";
 
-            SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
+            SmsValidation actual = SmsCharacterCalculator.GetSmsValidation(text);
 
             Assert.IsFalse(actual.IsLonger);
             Assert.IsTrue(actual.TextLength == 164);
-            Assert.IsTrue(actual.SMSCount == 2);
+            Assert.IsTrue(actual.SmsCount == 2);
             Assert.IsTrue(actual.OptimizedText == text);
         }
 
         [TestMethod]
         public void GetSMSValidation_With_Three_SMS()
         {
-            string text =
+            const string text =
                 "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}";
 
-            SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
+            SmsValidation actual = SmsCharacterCalculator.GetSmsValidation(text);
 
             Assert.IsFalse(actual.IsLonger);
             Assert.IsTrue(actual.TextLength == 308);
-            Assert.IsTrue(actual.SMSCount == 3);
+            Assert.IsTrue(actual.SmsCount == 3);
             Assert.IsTrue(actual.OptimizedText == text);
         }
 
         [TestMethod]
         public void GetSMSValidation_With_Long_SMS()
         {
-            string text =
+            const string text =
                 "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhhjhjjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhhjhjjhjjjjhjhjhjhhjhhhhuuuuuuuuuuuuuuuuuuuujdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}";
 
-            SMSValidation actual = SMSCharacterCalculator.GetSMSValidation(text);
+            SmsValidation actual = SmsCharacterCalculator.GetSmsValidation(text);
 
             Assert.IsTrue(actual.IsLonger);
             Assert.IsTrue(actual.TextLength == 461);
-            Assert.IsTrue(actual.SMSCount == 3);
+            Assert.IsTrue(actual.SmsCount == 3);
             Assert.IsTrue(actual.OptimizedText == text);
         }
     }
