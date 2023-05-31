@@ -1,16 +1,17 @@
-﻿namespace SmsCharacterCalculator
+﻿public record SmsValidation(string Text)
 {
-    public class SmsValidation
-    {
-        public bool IsLonger => TextLength > Consts.ThirdSmsLengthMax;
+    public bool IsLonger
+        => TextLength > Consts.ThirdSmsLengthMax;
 
-        public int TextLength { get; set; }
+    public int SmsCount
+        => TextLength switch
+        {
+            <= Consts.FirstSmsLengthMax => 1,
+            <= Consts.SecondSmsLengthMax => 2,
+            _ => 3
+        };
 
-        public int SmsCount =>
-            TextLength <= Consts.FirstSmsLengthMax ? 1
-            : TextLength <= Consts.SecondSmsLengthMax ? 2
-            : 3;
-
-        public string OptimizedText { get; set; }
-    }
+    public int TextLength
+        => (string.IsNullOrEmpty(Text)) ? 0
+        : Text.Sum(c => Consts.CharactersWithTwoLength.Contains(c) ? 2 : 1);
 }
