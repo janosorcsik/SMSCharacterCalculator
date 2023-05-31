@@ -31,7 +31,5 @@
     }
 
     private static char OptimizeCharacter(char character)
-    {
-        return Consts.UnicodeToGsm.TryGetValue(character, out char temp) ? temp : character;
-    }
+        => Consts.UnicodeToGsm.TryGetValue(character, out char temp) ? temp : character;
 }
