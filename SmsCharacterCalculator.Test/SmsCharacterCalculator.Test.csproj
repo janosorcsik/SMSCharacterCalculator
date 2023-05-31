@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+	<TargetFramework>net7.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
     <IsTestProject>true</IsTestProject>
     <IsPackable>false</IsPackable>
-    <AssemblyName>SmsCharacterCalculator.Test</AssemblyName>
-    <RootNamespace>SmsCharacterCalculator.Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
