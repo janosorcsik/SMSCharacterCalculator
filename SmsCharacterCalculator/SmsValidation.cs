@@ -2,19 +2,13 @@
 {
     public class SmsValidation
     {
-        private const int FirstSmsLengthMax = 160;
-
-        private const int SecondSmsLengthMax = 306;
-
-        private const int ThirdSmsLengthMax = 459;
-
-        public bool IsLonger => TextLength > ThirdSmsLengthMax;
+        public bool IsLonger => TextLength > Consts.ThirdSmsLengthMax;
 
         public int TextLength { get; set; }
 
         public int SmsCount =>
-            TextLength <= FirstSmsLengthMax ? 1
-            : TextLength <= SecondSmsLengthMax ? 2
+            TextLength <= Consts.FirstSmsLengthMax ? 1
+            : TextLength <= Consts.SecondSmsLengthMax ? 2
             : 3;
 
         public string OptimizedText { get; set; }

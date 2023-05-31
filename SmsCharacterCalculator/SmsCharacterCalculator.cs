@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SmsCharacterCalculator
@@ -31,7 +30,7 @@ namespace SmsCharacterCalculator
 
             for (int i = 0; i < text.Length; i++)
             {
-                length += CharactersWithTwoLength.Contains(text[i]) ? 2 : 1;
+                length += Consts.CharactersWithTwoLength.Contains(text[i]) ? 2 : 1;
             }
 
             return length;
@@ -57,26 +56,7 @@ namespace SmsCharacterCalculator
 
         private static char OptimizeCharacter(char character)
         {
-            return UnicodeToGsm.TryGetValue(character, out char temp) ? temp : character;
+            return Consts.UnicodeToGsm.TryGetValue(character, out char temp) ? temp : character;
         }
-
-        private static readonly IReadOnlyDictionary<char, char> UnicodeToGsm = new Dictionary<char, char>
-        {
-            {'á', 'à'},
-            {'í', 'ì'},
-            {'ó', 'ò'},
-            {'ú', 'ù'},
-            {'ő', 'ö'},
-            {'ű', 'ü'},
-            {'Á', 'Å'},
-            {'Í', 'I'},
-            {'Ú', 'U'},
-            {'Ó', 'O'},
-            {'Ő', 'Ö'},
-            {'Ű', 'Ü'}
-        };
-
-        private static readonly IReadOnlyCollection<char> CharactersWithTwoLength =
-            Array.AsReadOnly(new[] { '|', '^', '€', '{', '}', '[', '~', ']', '\\' });
     }
 }
