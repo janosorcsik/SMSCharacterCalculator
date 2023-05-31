@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("SmsCharacterCalculator.Test")]
 
 namespace SmsCharacterCalculator
 {
@@ -80,6 +77,6 @@ namespace SmsCharacterCalculator
         };
 
         private static readonly IReadOnlyCollection<char> CharactersWithTwoLength =
-            Array.AsReadOnly(new[] {'|', '^', '€', '{', '}', '[', '~', ']', '\\'});
+            Array.AsReadOnly(new[] { '|', '^', '€', '{', '}', '[', '~', ']', '\\' });
     }
 }
