@@ -1,6 +1,8 @@
-﻿public static class SmsCharacterCalculator
+﻿namespace SmsCharacterCalculator;
+
+public static class SmsCharacterCalculator
 {
-    public static SmsValidation GetSmsValidation(string text, bool optimize = true)
+    public static SmsValidation GetSmsValidation(string? text, bool optimize = true)
     {
         if (optimize)
         {
@@ -10,7 +12,7 @@
         return new SmsValidation(text);
     }
 
-    internal static string OptimizeText(string text)
+    internal static string? OptimizeText(string? text)
     {
         if (string.IsNullOrEmpty(text))
         {
@@ -21,7 +23,7 @@
 
         return string.Create(text.Length, 0, (buffer, _) =>
         {
-            int i = length;
+            var i = length;
             while (i >= 0)
             {
                 buffer[i] = OptimizeCharacter(text[i]);
@@ -31,5 +33,5 @@
     }
 
     private static char OptimizeCharacter(char character)
-        => Consts.UnicodeToGsm.TryGetValue(character, out char temp) ? temp : character;
+        => Constants.UnicodeToGsm.GetValueOrDefault(character, character);
 }

@@ -1,5 +1,7 @@
 ﻿using Xunit;
 
+namespace SmsCharacterCalculator.Test;
+
 public class SmsCharacterCalculatorTests
 {
     [Theory]
@@ -15,9 +17,9 @@ public class SmsCharacterCalculatorTests
     [InlineData("~", 2)]
     [InlineData("]", 2)]
     [InlineData(@"\", 2)]
-    public void CalculateLength(string text, int expectedLength)
+    public void CalculateLength(string? text, int expectedLength)
     {
-        int length = new SmsValidation(text).TextLength;
+        var length = new SmsValidation(text).TextLength;
 
         Assert.Equal(expectedLength, length);
     }
@@ -38,21 +40,31 @@ public class SmsCharacterCalculatorTests
     [InlineData("Ó", "O")]
     [InlineData("Ő", "Ö")]
     [InlineData("Ű", "Ü")]
-    public void OptimizeText(string text, string expectedOptimizedText)
+    public void OptimizeText(string? text, string? expectedOptimizedText)
     {
-        string optimizedText = SmsCharacterCalculator.OptimizeText(text);
+        var optimizedText = SmsCharacterCalculator.OptimizeText(text);
 
         Assert.Equal(expectedOptimizedText, optimizedText);
     }
 
     [Theory]
     [InlineData("{Í}", false, 5, 1, "{I}")]
-    [InlineData("{abvgfhtrururufhdfjhdjfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}", false, 164, 2, "{abvgfhtrururufhdfjhdjfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}")]
-    [InlineData("{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}", false, 308, 3, "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}")]
-    [InlineData("{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhhjhjjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhhjhjjhjjjjhjhjhjhhjhhhhuuuuuuuuuuuuuuuuuuuujdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}", true, 461, 3, "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhhjhjjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhhjhjjhjjjjhjhjhjhhjhhhhuuuuuuuuuuuuuuuuuuuujdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}")]
-    public void GetSmsValidation(string text, bool expectedIsLonger, int expectedTextLength, int expectedSmsCount, string expectedOptimizedText)
+    [InlineData(
+        "{abvgfhtrururufhdfjhdjfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}",
+        false, 164, 2,
+        "{abvgfhtrururufhdfjhdjfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}")]
+    [InlineData(
+        "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}",
+        false, 308, 3,
+        "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhjdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}")]
+    [InlineData(
+        "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhhjhjjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhhjhjjhjjjjhjhjhjhhjhhhhuuuuuuuuuuuuuuuuuuuujdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}",
+        true, 461, 3,
+        "{abvgfhtrururufhdfjhdjhfghfggfhfhiiiourzoruozuiorutiozuouuzuiortuziouriozuriozuiourzirtuziuituziouriotuzurzuriotuziutruziorioutruziutiuriturtzotioziortuzioiozutzutruzfhjdjfhhjhjjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhhjhjjhjjjjhjhjhjhhjhhhhuuuuuuuuuuuuuuuuuuuujdfhjkfhjksuizueuruiewrziwuezrizweiurzwuiezruiweuirweuizruiwezruizweuirwzeurzweuiriuwzeuirrwezruizweuiriuwzruizwiuezriuzweuirziuzzzz}")]
+    public void GetSmsValidation(string text, bool expectedIsLonger, int expectedTextLength, int expectedSmsCount,
+        string expectedOptimizedText)
     {
-        SmsValidation actual = SmsCharacterCalculator.GetSmsValidation(text);
+        var actual = SmsCharacterCalculator.GetSmsValidation(text);
 
         Assert.Equal(expectedIsLonger, actual.IsLonger);
         Assert.Equal(expectedTextLength, actual.TextLength);
